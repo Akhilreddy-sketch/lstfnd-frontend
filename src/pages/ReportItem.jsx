@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../api';
 import { Send, Loader2 } from 'lucide-react';
 
 export default function ReportItem() {
@@ -44,7 +44,8 @@ export default function ReportItem() {
       setSuccess('Item reported successfully!');
       setTimeout(() => navigate('/status'), 1500);
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Failed to report item.');
+      setError(err.message || 'Failed to report item.');
+      console.error("Report item error:", err);
     } finally {
       setLoading(false);
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../api';
 import { LogIn, Loader2 } from 'lucide-react';
 
 export default function Login() {
@@ -35,7 +35,8 @@ export default function Login() {
         navigate('/status');
       }
     } catch (err) {
-      setError(err.response?.data?.error || err.response?.data?.message || err.message || 'Login failed.');
+      setError(err.message || 'Login failed.');
+      console.error("Login component error:", err);
     } finally {
       setLoading(false);
     }

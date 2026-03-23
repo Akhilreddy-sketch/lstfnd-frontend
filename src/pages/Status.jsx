@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import api from '../api/axios';
+import api from '../api';
 import { RefreshCw, MapPin, Clock, Info, Phone, Trash2 } from 'lucide-react';
 
 export default function Status() {
@@ -24,7 +24,8 @@ export default function Status() {
       const response = await api.get('/api/items');
       setItems(response.data || []);
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Error fetching status. Is the backend running?');
+      setError(err.message || 'Error fetching status. Is the backend running?');
+      console.error("Status fetch error:", err);
     } finally {
       setLoading(false);
     }

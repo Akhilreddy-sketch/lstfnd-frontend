@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../api';
 import { UserPlus, Loader2 } from 'lucide-react';
 
 export default function Register() {
@@ -25,7 +25,8 @@ export default function Register() {
         navigate('/login');
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message || 'Registration failed.');
+      setError(err.message || 'Registration failed.');
+      console.error("Register component error:", err);
     } finally {
       setLoading(false);
     }
