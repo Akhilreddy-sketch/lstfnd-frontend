@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import api from '../api/axios';
 import { RefreshCw, MapPin, Clock, Info, Phone, Trash2 } from 'lucide-react';
 
 export default function Status() {
@@ -21,7 +21,7 @@ export default function Status() {
     setError('');
     
     try {
-      const response = await axios.get('http://localhost:8080/api/items');
+      const response = await api.get('/api/items');
       setItems(response.data || []);
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Error fetching status. Is the backend running?');
@@ -38,7 +38,7 @@ export default function Status() {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     
     try {
-      await axios.delete(`http://localhost:8080/api/items/${id}`);
+      await api.delete(`/api/items/${id}`);
       setItems(items.filter(item => (item.id || item.index) !== id));
       alert('Item deleted successfully');
     } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import { UserPlus, Loader2 } from 'lucide-react';
 
 export default function Register() {
@@ -20,7 +20,7 @@ export default function Register() {
     setError('');
     
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/register', formData);
+      const response = await api.post('/api/auth/register', formData);
       if (response.data) {
         navigate('/login');
       }

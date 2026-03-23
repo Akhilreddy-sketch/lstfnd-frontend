@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api/axios';
 import { LogIn, Loader2 } from 'lucide-react';
 
 export default function Login() {
@@ -28,7 +28,7 @@ export default function Login() {
         password: formData.password
       };
       
-      const response = await axios.post('http://localhost:8080/api/auth/login', payload);
+      const response = await api.post('/api/auth/login', payload);
       // Assuming standard success
       if (response.data && response.data.user) {
         localStorage.setItem('user', JSON.stringify(response.data.user)); // Save user object
