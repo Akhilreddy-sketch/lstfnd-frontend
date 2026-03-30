@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api';
+import API from '../api';
 import { LogIn, Loader2 } from 'lucide-react';
 
 export default function Login() {
@@ -28,7 +28,7 @@ export default function Login() {
         password: formData.password
       };
       
-      const response = await api.post('/auth/login', payload);
+      const response = await API.post('/api/auth/login', payload);
       // Save user object and token if they exist in the response
       if (response.data) {
         const user = response.data.user;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api';
+import API from '../api';
 import { Send, Loader2 } from 'lucide-react';
 
 export default function ReportItem() {
@@ -40,7 +40,7 @@ export default function ReportItem() {
     setSuccess('');
     
     try {
-      await api.post('/items', formData);
+      await API.post('/api/items', formData);
       setSuccess('Item reported successfully!');
       setTimeout(() => navigate('/status'), 1500);
     } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../api';
+import API from '../api';
 import { UserPlus, Loader2 } from 'lucide-react';
 
 export default function Register() {
@@ -20,7 +20,7 @@ export default function Register() {
     setError('');
     
     try {
-      const response = await api.post('/auth/register', formData);
+      const response = await API.post('/api/auth/register', formData);
       if (response.data) {
         navigate('/login');
       }

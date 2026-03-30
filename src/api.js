@@ -1,43 +1,42 @@
 import axios from 'axios';
 
-// Get API URL from env or fallback
-export const API_BASE_URL = (import.meta.env.VITE_API_URL || "https://lstfnd-backendnew.onrender.com") + "/api";
+// Centralized API Configuration following your exact requirements
+export const API_BASE_URL = "https://lstfnd-backendnew.onrender.com";
 
-const api = axios.create({
+const API = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 15000, // Increased timeout for Render wake-up
-  withCredentials: true, // Enable cross-origin credentials if required by backend
+  timeout: 15000,
+  withCredentials: true, // Matches your backend requirements
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-// Interceptor for adding Authorization token
-api.interceptors.request.use((config) => {
+// Request Interceptor: Automatically add JWT token to every request
+API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+}, (error) => Promise.reject(error));
 
-// Interceptor for better error handling
-api.interceptors.response.use(
+// Response Interceptor: Better error handling
+API.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Log the response for debugging
-    console.error("API Connection failure:", error.response);
+    // Fixes the "undefined" error responses by ensuring a message exists
+    const message = error.response?.data?.message || 
+                    error.response?.data?.error || 
+                    error.message || 
+                    "Network Error (Check CORS or Server)";
     
-    // Customize error message for UI
-    const message = error.response?.data?.message || error.response?.data?.error || error.message || "Network Error (CORS or Server Offline)";
+    console.error("API Error:", message);
     
-    // Re-pack error with a more useful message
     const customError = new Error(message);
     customError.response = error.response;
     return Promise.reject(customError);
   }
 );
 
-export default api;
+export default API;

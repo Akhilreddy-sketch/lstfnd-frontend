@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import api from '../api';
+import API from '../api';
 import { RefreshCw, MapPin, Clock, Info, Phone, Trash2 } from 'lucide-react';
 
 export default function Status() {
@@ -21,7 +21,7 @@ export default function Status() {
     setError('');
     
     try {
-      const response = await api.get('/items');
+      const response = await API.get('/api/items');
       setItems(response.data || []);
     } catch (err) {
       setError(err.message || 'Error fetching status. Is the backend running?');
@@ -39,7 +39,7 @@ export default function Status() {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     
     try {
-      await api.delete(`/items/${id}`);
+      await API.delete(`/api/items/${id}`);
       setItems(items.filter(item => (item.id || item.index) !== id));
       alert('Item deleted successfully');
     } catch (err) {
