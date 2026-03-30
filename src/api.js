@@ -6,6 +6,7 @@ export const API_BASE_URL = (import.meta.env.VITE_API_URL || "https://lstfnd-bac
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 15000, // Increased timeout for Render wake-up
+  withCredentials: true, // Enable cross-origin credentials if required by backend
   headers: {
     'Content-Type': 'application/json'
   }
@@ -27,10 +28,10 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     // Log the response for debugging
-    console.error("API Error Response:", error.response);
+    console.error("API Connection failure:", error.response);
     
     // Customize error message for UI
-    const message = error.response?.data?.message || error.response?.data?.error || error.message || "Network Error";
+    const message = error.response?.data?.message || error.response?.data?.error || error.message || "Network Error (CORS or Server Offline)";
     
     // Re-pack error with a more useful message
     const customError = new Error(message);
