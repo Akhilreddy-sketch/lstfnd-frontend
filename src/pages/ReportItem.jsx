@@ -40,7 +40,7 @@ export default function ReportItem() {
     setSuccess('');
     
     try {
-      await api.post('/api/items', formData);
+      await api.post('/items', formData);
       setSuccess('Item reported successfully!');
       setTimeout(() => navigate('/status'), 1500);
     } catch (err) {

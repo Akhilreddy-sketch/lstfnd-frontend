@@ -20,7 +20,7 @@ export default function Register() {
     setError('');
     
     try {
-      const response = await api.post('/api/auth/register', formData);
+      const response = await api.post('/auth/register', formData);
       if (response.data) {
         navigate('/login');
       }

@@ -28,10 +28,15 @@ export default function Login() {
         password: formData.password
       };
       
-      const response = await api.post('/api/auth/login', payload);
-      // Assuming standard success
-      if (response.data && response.data.user) {
-        localStorage.setItem('user', JSON.stringify(response.data.user)); // Save user object
+      const response = await api.post('/auth/login', payload);
+      // Save user object and token if they exist in the response
+      if (response.data) {
+        const user = response.data.user;
+        const token = response.data.token || user?.token; // Try both standard locations
+
+        if (user) localStorage.setItem('user', JSON.stringify(user));
+        if (token) localStorage.setItem('token', token);
+        
         navigate('/status');
       }
     } catch (err) {

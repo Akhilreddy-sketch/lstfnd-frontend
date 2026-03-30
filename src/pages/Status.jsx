@@ -21,7 +21,7 @@ export default function Status() {
     setError('');
     
     try {
-      const response = await api.get('/api/items');
+      const response = await api.get('/items');
       setItems(response.data || []);
     } catch (err) {
       setError(err.message || 'Error fetching status. Is the backend running?');
@@ -39,7 +39,7 @@ export default function Status() {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     
     try {
-      await api.delete(`/api/items/${id}`);
+      await api.delete(`/items/${id}`);
       setItems(items.filter(item => (item.id || item.index) !== id));
       alert('Item deleted successfully');
     } catch (err) {
